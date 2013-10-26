@@ -10,6 +10,15 @@ items = {
 	avatar: null
 };
 
+function randomSquare() {
+    var squares = ['red.png', 'orange.png', 'yellow.png', 'green.png', 'light_blue.png', 
+        'dark_blue.png', 'purple.png', 'magenta.png', 'strawberry.png'];
+    var image = new image;
+    image.src = 'assets/images/' + squares[Math.floor(Math.random() * 9)];
+    return image;
+}
+
+
 //Object prototype
 function Item (img, sx, sy, swidth, sheight, x, y, width, height, speed) {
 	this.img = img;
@@ -46,7 +55,7 @@ function Item (img, sx, sy, swidth, sheight, x, y, width, height, speed) {
 		ctx.drawImage(this.img, this.sx, this.sy, this.swidth, this.sheight, this.x, this.y, this.width, this.height);
 	}
     this.drawObject = function () {
-        ctx.drawImage(this.img, this.sx, this.sy, this.swidth, this.sheight, this.x, this.y, this.width, this.height);
+        ctx.drawImage(randomSquare(), this.sx, this.sy, this.swidth, this.sheight, this.x, this.y, this.width, this.height);
     }
 }
 
@@ -70,7 +79,7 @@ function initialize() {
 	avatar = new Image();
 	avatar.src = 'assets/images/simon.png';
 	items.avatar = new Item(avatar, 0, 0, 638, 850, 0, 0, 20, 20, 5);
-    items.objects = new Item(avatar, 0, 0, 638, 850, 900, 200, 20, 20, 5);
+    items.objects = new Item(randomSquare(), 0, 0, 20, 20, 900, 200, 20, 20, 5);
 
 
     //need creation array here
