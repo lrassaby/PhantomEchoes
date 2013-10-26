@@ -1,3 +1,32 @@
+// function startUpload(){
+//   document.getElementById('upload_process').style.display = 'block';
+//   document.getElementById('result').style.display = 'none';
+
+//   return true;
+// }
+// function stopUpload(success){
+//   var result = '';
+//   if (success == 1){
+//      result = '<span class="msg">The file was uploaded successfully!<\/span><br/><br/>';
+    
+//   }
+//   else {
+//      result = '<span class="emsg">There was an error during file upload! </br>Make sure filetype is .mp3.<\/span><br/>';
+//   }
+//     $('#file').val("");
+//   document.getElementById('upload_process').style.display = 'none';
+//   document.getElementById('result').innerHTML = result;
+//   document.getElementById('result').style.display = 'block'; 
+//   return true;   
+// }
+
+// function hideForm(){
+//     $('#the_table').remove();
+// }
+
+
+
+
 //Echonest API code
 apiKey   ='1DXWYOVVQHNF7AR18';
 
@@ -131,8 +160,9 @@ $(document).ready(function(){
 // initializes images/objects
 function initialize() {
 	avatar = new Image();
-	avatar.src = 'assets/images/simon.png';
-	items.avatar = new Item(avatar, 0, 0, 638, 850, 0, 0, 20, 20, 5);
+	avatar.src = 'assets/images/green.png';
+	items.avatar = new Item(avatar, 0, 0, 20, 20, 0, 0, 20, 20, 5);
+    for track.beats
     items.objects = new Item(randomSquare(), 0, 0, 20, 20, 900, 200, 20, 20, 5);
 
 
