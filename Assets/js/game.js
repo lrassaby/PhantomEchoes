@@ -162,7 +162,6 @@ function initialize() {
 	avatar = new Image();
 	avatar.src = 'assets/images/green.png';
 	items.avatar = new Item(avatar, 0, 0, 20, 20, 0, 0, 20, 20, 5);
-    for track.beats
     items.objects = new Item(randomSquare(), 0, 0, 20, 20, 900, 200, 20, 20, 5);
 
 
