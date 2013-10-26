@@ -1,92 +1,4 @@
-// function startUpload(){
-//   document.getElementById('upload_process').style.display = 'block';
-//   document.getElementById('result').style.display = 'none';
-
-//   return true;
-// }
-// function stopUpload(success){
-//   var result = '';
-//   if (success == 1){
-//      result = '<span class="msg">The file was uploaded successfully!<\/span><br/><br/>';
-    
-//   }
-//   else {
-//      result = '<span class="emsg">There was an error during file upload! </br>Make sure filetype is .mp3.<\/span><br/>';
-//   }
-//     $('#file').val("");
-//   document.getElementById('upload_process').style.display = 'none';
-//   document.getElementById('result').innerHTML = result;
-//   document.getElementById('result').style.display = 'block'; 
-//   return true;   
-// }
-
-// function hideForm(){
-//     $('#the_table').remove();
-// }
-
-
-
-
-//Echonest API code
-apiKey   ='1DXWYOVVQHNF7AR18';
-
-song = null;
-
-function getSongData() {
-    var trackURL = 'Freestyle.mp3';
-    var context  = new webkitAudioContext();
-    var _title   = 'Freestyle';
-    var _artist  = 'Taalbi Brothers';
-    var url = 'http://developer.echonest.com/api/v4/song/search?format=json&bucket=audio_summary';
-    $.getJSON(url, {title:_title, artist:_artist, api_key:apiKey}, function(data) {
-        var analysisURL = data.response.songs[0].audio_summary.analysis_url;
-        console.log(analysisURL);
-        var remixer = createJRemixer(context, $, apiKey);
-        remixer.remixTrackByURL(analysisURL, trackURL, function (track, percent) {
-            console.log(percent);
-            console.log(track.status);
-            if (track.status == 'ok') {
-                song = track;
-                /*
-                var bpm;
-                var bs = [];
-                var volume = [];
-                var game_beats = []; // JSON Object for iterating through in the game.
-                for (var i = 0; i < track.analysis.beats.length; i++) {
-                    bpm = 60/parseFloat(track.analysis.beats[i].duration);
-                    //console.log(track.analysis.beats.length);
-                    //console.log("next");
-                    //console.log(track.analysis.beats[i].time);
-                    console.log(bpm);
-                    bs.push(bpm);
-                    var loud = parseFloat(track.analysis.beats[i].oseg.loudness_max);
-                    volume.push(loud);
-                    game_beats.push({"bpm": bpm, "loudness": loud});
-                    //console.log(track.analysis.beats[i].oseg.loudness_start);
-                    //console.log('next');
-                }
-                //console.log("random string");
-                //console.log(volume);
-                //bs.sort();
-                //var v = volume.copy();
-                //var b = bs.copy();
-                // console.log(volume.sort());
-                // console.log(bs.sort());
-                // console.log(volume.shift(), volume.pop());
-                // console.log(bs.shift(), bs.pop());
-                // console.log(game_beats);
-                //console.log("Min volume: " + Math.min.apply(null, volume));
-                //console.log("Max volume: " + Math.max.apply(null, volume));
-                //console.log("BLAH");*/
-            } 
-        });
-    });
-}
-
-//API code ends here
-
-//global variables
-
+//globals
 score = 0;
 levelnumber = 1;
 moveup = false;
@@ -94,9 +6,60 @@ movedown = false;
 moveright = false;
 moveleft = false;
 items = {
-	obstacles: null,
-	avatar: null
+    obstacles: [],
+    avatar: null
 };
+
+songLength = 0;
+beats = new Array();
+volumes = new Array();
+//Echonest API code
+apiKey   ='1DXWYOVVQHNF7AR18';
+
+function getSongData(trackURL, _title, _artist) {
+
+    var context  = new webkitAudioContext();
+    var url = 'http://developer.echonest.com/api/v4/song/search?format=json&bucket=audio_summary';
+    $.getJSON(url, {title:_title, artist:_artist, api_key:apiKey}, function(data) {
+        var analysisURL = data.response.songs[0].audio_summary.analysis_url;
+
+        console.log(analysisURL);
+        var remixer = createJRemixer(context, $, apiKey);
+        remixer.remixTrackByURL(analysisURL, trackURL, function (track, percent) {
+            console.log(percent);
+            console.log(track.status);
+            if (track.status == 'ok') {
+                songLength = track.analysis.beats.length - 2;
+                console.log('YES WE GOT THINGS ANALYZED WOOOO!');
+
+                beats      = track.analysis.beats;
+                console.log('got beats:  ', beats);
+                for (var i = 0; i < songLength; i++) {
+                    volumes.push(parseFloat(beats[i].oseg.loudness_max));
+                }
+                console.log('defined volumes');
+
+                var max_volume = Math.max.apply(null, volumes);
+                var min_volume = Math.min.apply(null, volumes);
+                console.log('made it past the math.apply');
+                console.log(min_volume);
+                var range      = max_volume - min_volume;
+
+                // setting correct x/y values for beats in song
+                items.obstacles[0] = new Item(randomSquare(), 0, 0, 20, 20, 800, 
+                getElevation(range, min_volume, volumes[0]), 20, 20, 5);
+                for (var i = 1; i < songLength; i++) {
+                //console.log(beatDifference(beats[i-1].duration));
+                    items.obstacles[i] = new Item(randomSquare(), 0, 0, 20, 20, items.obstacles[i-1].x + beatDifference(parseFloat(beats[i-1].duration)), 
+                    getElevation(range, min_volume, volumes[i]), 20, 20, 5);
+                }   
+                
+            }
+        });
+    });
+}
+
+//API code ends here
 
 function randomSquare() {
     var squares = ['red.png', 'orange.png', 'yellow.png', 'green.png', 'light_blue.png', 
@@ -149,13 +112,14 @@ function Item (img, sx, sy, swidth, sheight, x, y, width, height, speed) {
 function reset() {
 }
 //anonymous function
+period = 0;
 $(document).ready(function(){
 	period = 1000/30; // milliseconds
 	ctx = document.getElementById('game').getContext('2d');
 	initialize();
 
 	avatar.onload = function() {
-         console.log("here");
+        console.log("here");
 		drawGame();
 		setInterval(drawGame, period); // draw refers to the function
 	};
@@ -164,8 +128,8 @@ $(document).ready(function(){
 function getElevation(range, min, volume) {
     return Math.round(380 * (volume - min) / range);
 }
-function beatDifference(beatDuration){
-    return ((5/period)*beatDuration);
+function beatDifference(beatDuration) {
+    return 5 / (period / 1000) * beatDuration;
 }
 
 // initializes images/objects
@@ -173,24 +137,9 @@ function initialize() {
 	avatar = new Image();
 	avatar.src = 'assets/images/green.png';
 	items.avatar = new Item(avatar, 0, 0, 20, 20, 0, 0, 20, 20, 5);
-    var songLength = song.analysis.beats.length;
-    var beats      = song.analysis.beats;
-    var volumes    = beats.map(function() {
-        return parseFloat(this.oseg.loudness_max);
-    }, beats);
-    var max_volume = Math.max.apply(null, volumes);
-    var min_volume = Math.min.apply(null, volumes);
-    var range      = max_volume - min_volume;
-
-    items.obstacles = new Array(songLength);
-
-// setting correct x/y values for beats in song
-    items.obstacles[0] = new Item(randomSquare(), 0, 0, 20, 20, 800, 
-            getElevation(range, min_volume, volumes[i]), 20, 20, 5);
-    for (var i = 1; i < songLength; i++) {
-        items.obstacles[i] = new Item(randomSquare(), 0, 0, 20, 20, 800+beatDifference(parseFloat(beats[i-1].duration)), 
-            getElevation(range, min_volume, volumes[i]), 20, 20, 5);
-    }	
+    
+    getSongData('Sail.mp3', 'Sail', 'Awolnation');
+    
     //key listeners
     document.addEventListener("keydown", KeyDown, false);
     document.addEventListener("keyup", KeyUp, false);
@@ -271,8 +220,8 @@ function addOverlays() {
 
 function renderObjects(){
 
-    for(var i = 0; i < songLength; i++) {
-        items.obstacles[i].x-=items.obstacles[i].speed;
+   for(var i = 0; i < songLength; i++) {
+        items.obstacles[i].x -= items.obstacles[i].speed;
         $(items.obstacles[i].img).ready(function () {
             items.obstacles[i].drawObject();
         });
@@ -288,10 +237,11 @@ function renderAvatar() {
 //will be used to detect interactions etc.
 function gameLoops(){
 
-    if(collision(items.avatar,items.objects)){
-        alert("you dead");
+    for (var i = 0; i < songLength; i++) {
+        if(collision(items.avatar,items.obstacles[i])){
+            alert("you dead");
+         }
     }
-
 }
 
 function collision(obj1, obj2){
