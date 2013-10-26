@@ -1,6 +1,15 @@
 var apiKey ='1DXWYOVVQHNF7AR18';
+<<<<<<< HEAD
 var trackURL = 'http://localhost:8000/Freestyle.mp3';
+=======
+<<<<<<< HEAD
+var trackURL = '/assets/music/dirtypaws.mp3';
+var trackID = 'SOJARUS1338A5D5F1C';
+=======
+var trackURL = 'http://localhost:8000/Red_Oyster_Cult.mp3';
+>>>>>>> 036daba5879a43919663fc794fee2621a9197e7b
 //var trackID = 'SOJARUS1338A5D5F1C';
+>>>>>>> 70103b78853d76efa8947f6c0107d61407df1a45
 var context = new webkitAudioContext();
 var _title = 'Freestyle';
 var _artist = 'Taalbi Brothers';
