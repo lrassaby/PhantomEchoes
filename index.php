@@ -20,13 +20,13 @@
     <canvas id="game" height="400" width="800"></canvas>
 </div>
 <!-- uploader/form -->
-<form action="upload.php" method="post"
+<!-- <form action="upload.php" method="post"
       enctype="multipart/form-data">
     <label for="file">Filename:</label>
     <input type="file" name="file" id="file"><br>
     <input type="submit" name="submit" value="Submit">
 </form>
 <div id="upload_process" style="display:none">Loading...<br/><img src="assets/images/loader.gif" /></div>
-                        <div id="result"></div>
+                        <div id="result"></div> -->
 </body>
 </html>

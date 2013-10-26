@@ -1,16 +1,19 @@
 body {
 	font-family: Impact, "Helvetica Neue", Helvetica, Arial, serif;
     /*background-image:url('../../assets/images/sheetmusic.png');*/
+   background-image:url(../images/slash_it.png); 
+   background-repeat: repeat;
 }
 
 #big_header {
 	margin: 0 auto;
 	text-align:  center;
-	width: 920px;
+	width: 800px;
 	z-index: 0;
 	background-color: rgba(0,0,0,0.8);
 	color: white;
 	text-shadow: black;
+    border-radius: 5px;
 }
 
 #game_wrapper{
@@ -18,8 +21,19 @@ body {
 }
 
 canvas {
-    background-color: rgba(0,0,0,0.5);
-    border-width: 20px 60px 60px 60px;
+background: #83c783; /* Old browsers */
+background: -moz-radial-gradient(center, ellipse cover,  #83c783 18%, #52b152 48%, #b4ddb4 60%, #52b152 65%, #008a00 83%); /* FF3.6+ */
+background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(18%,#83c783), color-stop(48%,#52b152), color-stop(60%,#b4ddb4), color-stop(65%,#52b152), color-stop(83%,#008a00)); /* Chrome,Safari4+ */
+background: -webkit-radial-gradient(center, ellipse cover,  #83c783 18%,#52b152 48%,#b4ddb4 60%,#52b152 65%,#008a00 83%); /* Chrome10+,Safari5.1+ */
+background: -o-radial-gradient(center, ellipse cover,  #83c783 18%,#52b152 48%,#b4ddb4 60%,#52b152 65%,#008a00 83%); /* Opera 12+ */
+background: -ms-radial-gradient(center, ellipse cover,  #83c783 18%,#52b152 48%,#b4ddb4 60%,#52b152 65%,#008a00 83%); /* IE10+ */
+background: radial-gradient(ellipse at center,  #83c783 18%,#52b152 48%,#b4ddb4 60%,#52b152 65%,#008a00 83%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#83c783', endColorstr='#008a00',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+
+
+    border-width: 20px 30px 30px 30px;
     border-color: rgba(0,0,0,.5);
     border-style: solid;
+    border-radius: 20px;
+
 }
