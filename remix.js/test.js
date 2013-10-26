@@ -1,6 +1,5 @@
 var apiKey ='1DXWYOVVQHNF7AR18';
 var trackURL = 'http://localhost:8000/Save The World.mp3';
-var trackID = 'SOJARUS1338A5D5F1C';
 var context = new webkitAudioContext();
 var _title = 'Save The World';
 var _artist = 'Swedish House Mafia';
