@@ -7,7 +7,7 @@ moveright = false;
 moveleft = false;
 items = {
     obstacles: [],
-    avatar: null
+    avatar: null,
     obstacles2: [],
     coin: null
 };
