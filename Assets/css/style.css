@@ -1,0 +1,26 @@
+body {
+	background-color: #ff9d00;
+	font-family: Impact, "Helvetica Neue", Helvetica, Arial, serif;
+    background-image:url('file://localhost/Users/louisrassaby/Desktop/echo_game/assets/images/sheetmusic.png');
+}
+
+#big_header {
+	margin: 0 auto;
+	text-align:  center;
+	width: 930px;
+	background-color: rgba(0,0,0,0.8);
+	color: white;
+	text-shadow: black;
+}
+
+#game_wrapper{
+    text-align: center;
+}
+
+canvas {
+    background-color: rgba(0,0,0,0.5);
+    padding: 5px;
+    border-width: 20px 60px 60px 60px;
+    border-color: rgba(0,0,0,.5);
+    border-style: solid;
+}
