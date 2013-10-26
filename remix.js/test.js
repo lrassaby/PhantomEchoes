@@ -34,15 +34,15 @@ $.getJSON(url, {title:_title, artist:_artist, api_key:apiKey}, function(data) {
         }
 
         //console.log("random string");
-        console.log(volume);
+        //console.log(volume);
         bs.sort();
           //var v = volume.copy();
           //var b = bs.copy();
-        console.log(volume.sort());
-        console.log(bs.sort());
-        console.log(volume.shift(), volume.pop());
-        console.log(bs.shift(), bs.pop());
-        console.log(game_beats);
+       // console.log(volume.sort());
+       // console.log(bs.sort());
+       // console.log(volume.shift(), volume.pop());
+      //  console.log(bs.shift(), bs.pop());
+      //  console.log(game_beats);
         console.log("Min volume: " + Math.min.apply(null, volume));
         console.log("Max volume: " + Math.max.apply(null, volume));
         //console.log("BLAH");
