@@ -8,6 +8,8 @@ moveleft = false;
 items = {
     obstacles: [],
     avatar: null
+    obstacles2: [],
+    coin: null
 };
 
 songLength = 0;
@@ -44,16 +46,23 @@ function getSongData(trackURL, _title, _artist) {
                 console.log('made it past the math.apply');
                 console.log(min_volume);
                 var range      = max_volume - min_volume;
-
+                
                 // setting correct x/y values for beats in song
                 items.obstacles[0] = new Item(randomSquare(), 0, 0, 20, 20, 800, 
                 getElevation(range, min_volume, volumes[0]), 20, 20, 5);
+                
+                items.obstacles2[0] = new Item(randomSquare(), 0, 0, 20, 20, 800, 
+                getElevation(range, min_volume, max_volume+volumes[0]), 20, 20, 5);
+
                 for (var i = 1; i < songLength; i++) {
                 //console.log(beatDifference(beats[i-1].duration));
                     items.obstacles[i] = new Item(randomSquare(), 0, 0, 20, 20, items.obstacles[i-1].x + beatDifference(parseFloat(beats[i-1].duration)), 
                     getElevation(range, min_volume, volumes[i]), 20, 20, 5);
+                    
+                    items.obstacles2[i] = new Item(randomSquare(), 0, 0, 20, 20, items.obstacles2[i-1].x + beatDifference(parseFloat(beats[i-1].duration)), 
+                    getElevation(range, min_volume, max_volume + volumes[i]), 20, 20, 5);
+
                 }   
-                
             }
         });
     });
@@ -172,10 +181,17 @@ function beatDifference(beatDuration) {
     return 5 / (period / 1000) * beatDuration;
 }
 
+function createCoin(){
+        var coin = new Image();
+        coin.src = 'assets/images/coin.png';
+        return new Item(coin, 0, 0, 20, 20, Math.random() * 380, Math.random() * 780, 20, 20, 0);
+}
+
+
 // initializes images/objects
 function initialize() {
 
-
+        items.coin = createCoin();
 	avatar = new Image();
 	avatar.src = 'assets/images/green.png';
 	items.avatar = new Item(avatar, 0, 0, 20, 20, 0, 0, 20, 20, 5);
@@ -275,30 +291,45 @@ function addOverlays() {
 }
 
 function renderObjects(){
-
-   for(var i = 0; i < songLength; i++) {
+    for(var i = 0; i < songLength; i++) {
         items.obstacles[i].x -= items.obstacles[i].speed;
         $(items.obstacles[i].img).ready(function () {
             items.obstacles[i].drawObject();
         });
+          
+        items.obstacles2[i].x -= items.obstacles2[i].speed;
+        $(items.obstacles2[i].img).ready(function () {
+            items.obstacles2[i].drawObject();
+        });
     }
+    $(items.coin.image).ready(function() {
+        items.coin.drawme();
+    });
+
 }
+
+
 function renderAvatar() {
 	$(items.avatar.img).ready(function () {
 		items.avatar.drawme();
 	});
 }
 
-
 //will be used to detect interactions etc.
 function gameLoops(){
 
     for (var i = 0; i < songLength; i++) {
-        if(collision(items.avatar,items.obstacles[i])){
+        if(collision(items.avatar,items.obstacles[i]) || 
+           collision(items.avatar,items.obstacles2[i])){
             alert("you dead");
          }
     }
+    if(collision(items.avatar, items.coin)) {
+      console.log("Got Coin!");
+      items.coin = createCoin();
+    }
 }
+
 
 function collision(obj1, obj2){
     if (obj1.x + obj1.width - 5 < obj2.x) {
