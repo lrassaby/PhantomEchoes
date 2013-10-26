@@ -9,6 +9,15 @@
 
 <!-- EchoNest Scripts -->
 <script type="text/javascript" src="remix.js/remix.js"></script>
+<script type="text/javascript">
+        soundManager.onready(function() {
+            if($('#r1').isChecked){
+
+            }
+         soundManager.createSound({id:'song1', url:'/audio/foo.mp3'});
+});
+</script>
+
 <script src="assets/js/game.js"></script>
 <!-- <script type="text/javascript" src="remix.js/test.js"></script> -->
 </head>
@@ -19,7 +28,13 @@
 <!-- game  -->
 <div id="game_wrapper">
     <canvas id="game" height="400" width="800"></canvas>
+    
 </div>
+<button id="play" onclick="soundManager.play('mySound1');return false">Play Button</button>
+<input type='radio' id="r1"></input>
+<input type='radio' id="r2"></input>
+<input type='radio' id="r3"></input>
+
 <!-- uploader/form -->
 <!-- <form action="upload.php" method="post"
       enctype="multipart/form-data">
