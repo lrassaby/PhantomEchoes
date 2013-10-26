@@ -165,7 +165,6 @@ function getElevation(range, min, volume) {
     return Math.round(380 * (volume - min) / range);
 }
 function beatDifference(beatDuration){
-
     return ((5/period)*beatDuration);
 }
 function getStartingXVal(avg, )
@@ -175,7 +174,6 @@ function initialize() {
 	avatar = new Image();
 	avatar.src = 'assets/images/green.png';
 	items.avatar = new Item(avatar, 0, 0, 20, 20, 0, 0, 20, 20, 5);
-<<<<<<< HEAD
     var songLength = song.analysis.beats.length;
     var beats      = song.analysis.beats;
     var volumes    = beats.map(function() {
@@ -193,13 +191,7 @@ function initialize() {
     for (var i = 1; i < songLength; i++) {
         items.obstacles[i] = new Item(randomSquare(), 0, 0, 20, 20, 800+beatDifference(parseFloat(beats[i-1].duration)), 
             getElevation(range, min_volume, volumes[i]), 20, 20, 5);
-    }
-=======
-    items.objects = new Item(randomSquare(), 0, 0, 20, 20, 900, 200, 20, 20, 5);
-
->>>>>>> c2fd039b77aa15e0c74a35b4c2f421cd480e7af3
-
-	
+    }	
     //key listeners
     document.addEventListener("keydown", KeyDown, false);
     document.addEventListener("keyup", KeyUp, false);
