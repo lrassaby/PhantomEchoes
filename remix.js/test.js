@@ -1,5 +1,5 @@
 var apiKey ='1DXWYOVVQHNF7AR18';
-var trackURL = 'http://localhost:8000/Freestyle.mp3';
+var trackURL = 'Freestyle.mp3';
 //var trackID = 'SOJARUS1338A5D5F1C';
 var context = new webkitAudioContext();
 var _title = 'Freestyle';

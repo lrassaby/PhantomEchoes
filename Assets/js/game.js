@@ -1,3 +1,4 @@
+//global variables
 score = 0;
 levelnumber = 1;
 moveup = false;
@@ -9,6 +10,7 @@ items = {
 	avatar: null
 };
 
+//Object prototype
 function Item (img, sx, sy, swidth, sheight, x, y, width, height, speed) {
 	this.img = img;
 	this.sx = sx;
@@ -51,7 +53,7 @@ function Item (img, sx, sy, swidth, sheight, x, y, width, height, speed) {
 
 function reset() {
 }
-
+//anonymous function
 $(document).ready(function(){
 	delay = 1000/30; // milliseconds
 	ctx = document.getElementById('game').getContext('2d');
@@ -63,7 +65,7 @@ $(document).ready(function(){
 		setInterval(drawGame, delay); // draw refers to the function
 	};
 });
-
+// initializes images/objects
 function initialize() {
 	avatar = new Image();
 	avatar.src = 'assets/images/simon.png';
@@ -71,8 +73,9 @@ function initialize() {
     items.objects = new Item(avatar, 0, 0, 638, 850, 900, 200, 20, 20, 5);
 
 
-    //creation array
+    //need creation array here
 	
+    //key listeners
     document.addEventListener("keydown", KeyDown, false);
     document.addEventListener("keyup", KeyUp, false);
 
@@ -131,6 +134,7 @@ function initialize() {
 }
 
 
+//calls rendering functions
 function drawGame() {
 	renderBackgrounds();
 	//addOverlays();
@@ -164,6 +168,8 @@ function renderAvatar() {
 	});
 }
 
+
+//will be used to detect interactions etc.
 function gameLoops(){
 
     if(collision(items.avatar,items.objects)){
@@ -171,6 +177,7 @@ function gameLoops(){
     }
 
 }
+
 function collision(obj1, obj2){
     if (obj1.x + obj1.width - 5 < obj2.x) {
       	return false;
