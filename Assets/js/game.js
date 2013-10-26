@@ -82,24 +82,35 @@ function Item (img, sx, sy, swidth, sheight, x, y, width, height, speed) {
 	this.width = width;
 	this.height = height;
 	this.speed = speed;
-
+        
+        var canvas = document.getElementById('game');
+        this.ctxheight = canvas.height-20;
+        this.ctxwidth  = canvas.width-20;
 	this.breathefire = function () {
 		alert("breathing fire");
 	}
 		
 	this.drawme = function () {
-      
         if (moveup){
-            this.y -= this.speed;           
+            if(this.y - this.speed <= 0)
+                this.y =0;
+            else  this.y -= this.speed;   
+            
         }
         if(movedown){
-            this.y += this.speed;
+            if(this.y+this.speed >= this.ctxheight)
+                this.y = this.ctxheight;
+            else  this.y += this.speed;
         }
         if(moveleft){
-            this.x -= this.speed;
+            if(this.x - this.speed <= 0)
+                this.x=0;
+            else  this.x -= this.speed;
         }
         if(moveright){
-            this.x += this.speed;
+            if(this.x + this.speed >= this.ctxwidth)
+                this.x= this.ctxwidth;
+            else  this.x += this.speed;
         }
 		ctx.drawImage(this.img, this.sx, this.sy, this.swidth, this.sheight, this.x, this.y, this.width, this.height);
 	}
