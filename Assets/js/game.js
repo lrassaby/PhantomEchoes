@@ -98,16 +98,14 @@ function drawGame() {
 }
 
 function addBackgrounds () {
-	//water
 	ctx.fillStyle = "#191970";
-	ctx.fillRect(0, 0, 800, 400); 
+	ctx.fillRect(0, 0, 800, 400);
 }
 
 function addOverlays() {
 }
 
 function addAvatar() {
-	console.log("hello");
 	$(items.avatar.img).ready(function () {
 		items.avatar.drawme();
 	});
