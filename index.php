@@ -6,9 +6,10 @@
 <title>Phantom Echoes</title>
 <link rel="stylesheet" href="assets/css/style.css">
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-<script src="assets/js/game.js"></script>
+
 <!-- EchoNest Scripts -->
 <script type="text/javascript" src="remix.js/remix.js"></script>
+<script src="assets/js/game.js"></script>
 <!-- <script type="text/javascript" src="remix.js/test.js"></script> -->
 </head>
     <h1 id="big_header"> 

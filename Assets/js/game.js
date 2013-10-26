@@ -167,7 +167,6 @@ function getElevation(range, min, volume) {
 function beatDifference(beatDuration){
     return ((5/period)*beatDuration);
 }
-function getStartingXVal(avg, )
 
 // initializes images/objects
 function initialize() {
