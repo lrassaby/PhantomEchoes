@@ -30,6 +30,8 @@
 //Echonest API code
 apiKey   ='1DXWYOVVQHNF7AR18';
 
+song = null;
+
 function getSongData() {
     var trackURL = 'Freestyle.mp3';
     var context  = new webkitAudioContext();
@@ -44,6 +46,8 @@ function getSongData() {
             console.log(percent);
             console.log(track.status);
             if (track.status == 'ok') {
+                song = track;
+                /*
                 var bpm;
                 var bs = [];
                 var volume = [];
@@ -73,7 +77,7 @@ function getSongData() {
                 // console.log(game_beats);
                 //console.log("Min volume: " + Math.min.apply(null, volume));
                 //console.log("Max volume: " + Math.max.apply(null, volume));
-                //console.log("BLAH");
+                //console.log("BLAH");*/
             } 
         });
     });
@@ -82,6 +86,7 @@ function getSongData() {
 //API code ends here
 
 //global variables
+
 score = 0;
 levelnumber = 1;
 moveup = false;
@@ -89,7 +94,7 @@ movedown = false;
 moveright = false;
 moveleft = false;
 items = {
-	obstacles: [],
+	obstacles: null,
 	avatar: null
 };
 
@@ -115,7 +120,6 @@ function Item (img, sx, sy, swidth, sheight, x, y, width, height, speed) {
 	this.height = height;
 	this.speed = speed;
 
-
 	this.breathefire = function () {
 		alert("breathing fire");
 	}
@@ -130,7 +134,6 @@ function Item (img, sx, sy, swidth, sheight, x, y, width, height, speed) {
         }
         if(moveleft){
             this.x -= this.speed;
-
         }
         if(moveright){
             this.x += this.speed;
@@ -147,26 +150,50 @@ function reset() {
 }
 //anonymous function
 $(document).ready(function(){
-	delay = 1000/30; // milliseconds
+	period = 1000/30; // milliseconds
 	ctx = document.getElementById('game').getContext('2d');
 	initialize();
 
 	avatar.onload = function() {
          console.log("here");
 		drawGame();
-		setInterval(drawGame, delay); // draw refers to the function
+		setInterval(drawGame, period); // draw refers to the function
 	};
 });
+
+function getElevation(range, min, volume) {
+    return Math.round(380 * (volume - min) / range);
+}
+function beatDifference(beatDuration){
+
+    return ((5/period)*beatDuration);
+}
+function getStartingXVal(avg, )
+
 // initializes images/objects
 function initialize() {
 	avatar = new Image();
 	avatar.src = 'assets/images/green.png';
 	items.avatar = new Item(avatar, 0, 0, 20, 20, 0, 0, 20, 20, 5);
-    for track.beats
-    items.objects = new Item(randomSquare(), 0, 0, 20, 20, 900, 200, 20, 20, 5);
+    var songLength = song.analysis.beats.length;
+    var beats      = song.analysis.beats;
+    var volumes    = beats.map(function() {
+        return parseFloat(this.oseg.loudness_max);
+    }, beats);
+    var max_volume = Math.max.apply(null, volumes);
+    var min_volume = Math.min.apply(null, volumes);
+    var range      = max_volume - min_volume;
 
+    items.obstacles = new Array(songLength);
 
-    //need creation array here
+// setting correct x/y values for beats in song
+    items.obstacles[0] = new Item(randomSquare(), 0, 0, 20, 20, 800, 
+            getElevation(range, min_volume, volumes[i]), 20, 20, 5);
+    for (var i = 1; i < songLength; i++) {
+        items.obstacles[i] = new Item(randomSquare(), 0, 0, 20, 20, 800+beatDifference(parseFloat(beats[i-1].duration)), 
+            getElevation(range, min_volume, volumes[i]), 20, 20, 5);
+    }
+
 	
     //key listeners
     document.addEventListener("keydown", KeyDown, false);
@@ -235,8 +262,7 @@ function drawGame() {
 
     renderObjects();	
 
-        gameLoops();
-    
+    gameLoops();
 }
 
 function renderBackgrounds () {
@@ -248,12 +274,13 @@ function addOverlays() {
 }
 
 function renderObjects(){
-    items.objects.x-=items.objects.speed;
-    $(items.objects.img).ready(function () {
-        items.objects.drawObject();
-    });
 
-
+    for(var i = 0; i < songLength; i++) {
+        items.obstacles[i].x-=items.obstacles[i].speed;
+        $(items.obstacles[i].img).ready(function () {
+            items.obstacles[i].drawObject();
+        });
+    }
 }
 function renderAvatar() {
 	$(items.avatar.img).ready(function () {
