@@ -13,7 +13,7 @@ items = {
 function randomSquare() {
     var squares = ['red.png', 'orange.png', 'yellow.png', 'green.png', 'light_blue.png', 
         'dark_blue.png', 'purple.png', 'magenta.png', 'strawberry.png'];
-    var image = new image;
+    var image = new Image();
     image.src = 'assets/images/' + squares[Math.floor(Math.random() * 9)];
     return image;
 }
