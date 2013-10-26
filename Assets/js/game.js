@@ -12,6 +12,8 @@ items = {
     coin: null
 };
 
+interval = null;
+
 songLength = 0;
 beats = new Array();
 volumes = new Array();
@@ -166,8 +168,8 @@ $(document).ready(function(){
 
                 avatar.onload = function() {
                 console.log("here");
-                drawGame();
-                setInterval(drawGame, period); // draw refers to the function
+                //drawGame();
+        	interval = setInterval(drawGame, period); // draw refers to the function
             };
 
         });
@@ -321,7 +323,10 @@ function gameLoops(){
     for (var i = 0; i < songLength; i++) {
         if(collision(items.avatar,items.obstacles[i]) || 
            collision(items.avatar,items.obstacles2[i])){
-            alert("you dead");
+            var image = new Image();
+            image.src = 'assets/images/screen_over.png';
+            ctx.drawImage(image, 86,0);
+            clearInterval(interval);
          }
     }
     if(collision(items.avatar, items.coin)) {
