@@ -125,16 +125,44 @@ function reset() {
 //anonymous function
 period = 0;
 $(document).ready(function(){
-	period = 1000/30; // milliseconds
-	ctx = document.getElementById('game').getContext('2d');
 
-	initialize();
+    if($(".r").is(":checked")){
+        
 
-	avatar.onload = function() {
-        console.log("here");
-		drawGame();
-		setInterval(drawGame, period); // draw refers to the function
-	};
+       
+
+    };
+    	$("#play").click(function(){
+            period = 1000/30; // milliseconds
+        ctx = document.getElementById('game').getContext('2d');
+             initialize();
+
+//media player
+ if($("#r1").is(":checked")){
+     $('#sound_element').html(
+"<embed src='"+'Sail.mp3'+"' hidden=true autostart=true loop=false>");
+      
+    }
+    if($("#r2").is(":checked")){
+      $('#sound_element').html(
+"<embed src='"+'Freestyle.mp3'+"' hidden=true autostart=true loop=false>");
+    }
+    if($("#r3").is(":checked")){
+     $('#sound_element').html(
+"<embed src='"+'Red_Oyster_Cult.mp3'+"' hidden=true autostart=true loop=false>");
+    }
+
+
+
+
+                avatar.onload = function() {
+                console.log("here");
+                drawGame();
+                setInterval(drawGame, period); // draw refers to the function
+            };
+
+        });
+    	
 });
 
 function getElevation(range, min, volume) {
@@ -146,20 +174,22 @@ function beatDifference(beatDuration) {
 
 // initializes images/objects
 function initialize() {
+
+
 	avatar = new Image();
 	avatar.src = 'assets/images/green.png';
 	items.avatar = new Item(avatar, 0, 0, 20, 20, 0, 0, 20, 20, 5);
-    if($("#r1").is(":checked"){
+    if($("#r1").is(":checked")){
         var mp3 = 'Sail.mp3';
         var title = 'Sail';
         var band = 'Awolnation';
     }
-    if($("#r2").is(":checked"){
+    if($("#r2").is(":checked")){
         var mp3 = 'Freestyle.mp3';
         var title = 'Freestyle';
         var band = 'Taalbi Brothers';
     }
-    if($("#r3").is(":checked"){
+    if($("#r3").is(":checked")){
         var mp3 = 'Red_Oyster_Cult.mp3';
         var title = 'Red Oyster Cult';
         var band = 'Guster';

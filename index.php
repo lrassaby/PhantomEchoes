@@ -10,12 +10,20 @@
 <!-- EchoNest Scripts -->
 <script type="text/javascript" src="remix.js/remix.js"></script>
 <script type="text/javascript">
-        soundManager.onready(function() {
-            if($('#r1').isChecked){
-
+       
+            if( $('#r1').is(":checked")){
+                $('#r2').prop("checked",false);
+                $('#r3').prop("checked",false);
             }
-         soundManager.createSound({id:'song1', url:'/audio/foo.mp3'});
-});
+            if($('#r2').is(":checked")){
+                $('#r1').prop("checked",false);
+                $('#r3').prop("checked",false);
+            }
+            if($('#r3').is(":checked")){
+                $('#r2').prop("checked",false);
+                $('#r1').prop("checked",false);
+            }
+     
 </script>
 
 <script src="assets/js/game.js"></script>
@@ -30,10 +38,11 @@
     <canvas id="game" height="400" width="800"></canvas>
     
 </div>
-<button id="play" onclick="soundManager.play('mySound1');return false">Play Button</button>
-<input type='radio' id="r1"></input>
-<input type='radio' id="r2"></input>
-<input type='radio' id="r3"></input>
+<button id="play" >Play Button</button>
+<div id='sound_element'></div>
+<input type='radio' class="r"id="r1"></input>
+<input type='radio' class="r"id="r2"></input>
+<input type='radio' class="r"id="r3"></input>
 
 <!-- uploader/form -->
 <!-- <form action="upload.php" method="post"
