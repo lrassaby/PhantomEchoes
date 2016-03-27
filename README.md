@@ -1,4 +1,4 @@
-Phantom Echoes
+Phantom Echoes (Spotify/Echonest Challenge Winner at TuftsHack 2013)
 -------------------------------------------------------------------------------
 
 Phantom Echos is an interactive 2D musical adventure that's
